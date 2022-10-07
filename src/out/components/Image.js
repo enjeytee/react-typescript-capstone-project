@@ -30,7 +30,7 @@ const Image = ({ className, img }) => {
     const allPhotosContext = (0, react_1.useContext)(Context_jsx_1.Context);
     if (!allPhotosContext)
         return null;
-    const { toggleFavorite, addToCart, cartItem, removeFromCart } = allPhotosContext;
+    const { toggleFavorite, addToCart, cartItems, removeFromCart } = allPhotosContext;
     const heartIcon = () => {
         if (img.isFavorite) {
             return react_1.default.createElement("i", { onClick: () => toggleFavorite(img.id), className: "ri-heart-fill favorite" });
@@ -41,7 +41,7 @@ const Image = ({ className, img }) => {
         ;
     };
     const cartIcon = () => {
-        const isInCart = cartItem.some(item => item.id === img.id);
+        const isInCart = cartItems.some(item => item.id === img.id);
         if (isInCart) {
             return react_1.default.createElement("i", { onClick: () => removeFromCart(img.id), className: "ri-shopping-cart-fill cart" });
         }

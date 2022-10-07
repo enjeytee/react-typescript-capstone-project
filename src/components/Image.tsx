@@ -6,7 +6,7 @@ const Image = ({ className, img }: IImageProps) => {
     const [hovered, setHovered] = useState(false);
     const allPhotosContext = useContext(Context);
     if (!allPhotosContext) return null;
-    const { toggleFavorite, addToCart, cartItem, removeFromCart } = allPhotosContext;
+    const { toggleFavorite, addToCart, cartItems, removeFromCart } = allPhotosContext;
     const heartIcon = () => {
         if (img.isFavorite) {
             return <i onClick={() => toggleFavorite(img.id)} className="ri-heart-fill favorite"></i>
@@ -15,7 +15,7 @@ const Image = ({ className, img }: IImageProps) => {
         };
     };
     const cartIcon = () => {
-        const isInCart = cartItem.some(item => item.id === img.id);
+        const isInCart = cartItems.some(item => item.id === img.id);
         if (isInCart) {
             return <i onClick={() => removeFromCart(img.id)} className="ri-shopping-cart-fill cart"></i>
         } else if (hovered) {

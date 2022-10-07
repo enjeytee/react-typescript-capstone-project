@@ -24,19 +24,16 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importStar(require("react"));
-const react_router_dom_1 = require("react-router-dom");
 const Context_jsx_1 = require("../Context.jsx");
-const Header = () => {
+const CartItem = ({ img }) => {
     const allPhotosContext = (0, react_1.useContext)(Context_jsx_1.Context);
     if (!allPhotosContext)
         return null;
-    const { cartItems } = allPhotosContext;
-    return (react_1.default.createElement("header", null,
-        react_1.default.createElement(react_router_dom_1.Link, { to: "/" },
-            react_1.default.createElement("h2", null, "Pic Some")),
-        react_1.default.createElement(react_router_dom_1.Link, { to: "/cart" }, cartItems.length ?
-            react_1.default.createElement("i", { className: "ri-shopping-cart-fill ri-fw ri-2x" }) :
-            react_1.default.createElement("i", { className: "ri-shopping-cart-line ri-fw ri-2x" }))));
+    const { removeFromCart } = allPhotosContext;
+    return (react_1.default.createElement("div", { className: "cart-item" },
+        react_1.default.createElement("i", { onClick: () => removeFromCart(img.id), className: "ri-delete-bin-line" }),
+        react_1.default.createElement("img", { src: img.url, width: "130px" }),
+        react_1.default.createElement("p", null, "\u20B199.95")));
 };
-exports.default = Header;
-//# sourceMappingURL=Header.js.map
+exports.default = CartItem;
+//# sourceMappingURL=CartItem.js.map

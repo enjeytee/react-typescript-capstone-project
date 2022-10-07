@@ -7,7 +7,7 @@ export interface IContext {
     allPhotos: IAllPhotos[];
     toggleFavorite: (id: string) => void;
     addToCart: (img: IAllPhotos) => void;
-    cartItem: IAllPhotos[];
+    cartItems: IAllPhotos[];
     removeFromCart: (id: string) => void;
 };
 
@@ -16,6 +16,6 @@ export interface IContextProps {
 };
 
 export interface IImageProps extends IContextProps{
-    className: string | undefined;
+    className?: string | undefined;
     img: IAllPhotos;
 };
