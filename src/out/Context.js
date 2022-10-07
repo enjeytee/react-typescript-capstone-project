@@ -31,20 +31,17 @@ const ContextProvider = ({ children }) => {
     const [allPhotos, setAllPhotos] = (0, react_1.useState)([]);
     const url = "https://raw.githubusercontent.com/bobziroll/scrimba-react-bootcamp-images/master/images.json";
     (0, react_1.useEffect)(() => {
-        fetch("https://raw.githubusercontent.com/bobziroll/scrimba-react-bootcamp-images/master/images.json")
+        fetch(url)
             .then(response => response.json())
             .then(data => setAllPhotos(data));
     }, []);
     const toggleFavorite = (id) => {
         const updatedArray = allPhotos.map(photo => {
             if (photo.id === id) {
-                console.log(id);
-                console.log(!photo.isFavorite);
                 return Object.assign(Object.assign({}, photo), { isFavorite: !photo.isFavorite });
             }
             return photo;
         });
-        // console.log(updatedArray);
         setAllPhotos(updatedArray);
         console.log(allPhotos);
     };
