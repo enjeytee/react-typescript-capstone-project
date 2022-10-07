@@ -25,20 +25,47 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Context = exports.ContextProvider = void 0;
 const react_1 = __importStar(require("react"));
-;
 const Context = (0, react_1.createContext)(null);
 exports.Context = Context;
 const ContextProvider = ({ children }) => {
     const [allPhotos, setAllPhotos] = (0, react_1.useState)([]);
+    const url = "https://raw.githubusercontent.com/bobziroll/scrimba-react-bootcamp-images/master/images.json";
     (0, react_1.useEffect)(() => {
-        const url = "https://raw.githubusercontent.com/bobziroll/scrimba-react-bootcamp-images/master/images.json";
-        fetch(url)
+        fetch("https://raw.githubusercontent.com/bobziroll/scrimba-react-bootcamp-images/master/images.json")
             .then(response => response.json())
             .then(data => setAllPhotos(data));
     }, []);
+    const toggleFavorite = (id) => {
+        const updatedArray = allPhotos.map(photo => {
+            if (photo.id === id) {
+                console.log(id);
+                console.log(!photo.isFavorite);
+                return Object.assign(Object.assign({}, photo), { isFavorite: !photo.isFavorite });
+            }
+            return photo;
+        });
+        // console.log(updatedArray);
+        setAllPhotos(updatedArray);
+        console.log(allPhotos);
+    };
     return (react_1.default.createElement(Context.Provider, { value: {
-            allPhotos: allPhotos
+            allPhotos: allPhotos,
+            toggleFavorite: toggleFavorite
         } }, children));
 };
 exports.ContextProvider = ContextProvider;
+/*
+    function toggleFavorite(id) {
+        const updatedArr = allPhotos.map(photo => {
+            if (photo.id === id) {
+                return {
+                    ...photo,
+                    isFavorite: !photo.isFavorite
+                }
+            }
+            return photo
+        })
+        setAllPhotos(updatedArr)
+    }
+*/ 
 //# sourceMappingURL=Context.js.map
