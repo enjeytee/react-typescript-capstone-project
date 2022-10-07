@@ -26,9 +26,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Context = exports.ContextProvider = void 0;
 const react_1 = __importStar(require("react"));
 ;
-;
-;
-const Context = react_1.default.createContext(null);
+const Context = (0, react_1.createContext)(null);
 exports.Context = Context;
 const ContextProvider = ({ children }) => {
     const [allPhotos, setAllPhotos] = (0, react_1.useState)([]);
@@ -38,7 +36,6 @@ const ContextProvider = ({ children }) => {
             .then(response => response.json())
             .then(data => setAllPhotos(data));
     }, []);
-    console.log(allPhotos);
     return (react_1.default.createElement(Context.Provider, { value: {
             allPhotos: allPhotos
         } }, children));

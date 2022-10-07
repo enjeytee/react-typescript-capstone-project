@@ -1,31 +1,27 @@
-import React, { useState, ReactNode, useEffect } from "react";
+import React, { useState, useEffect, createContext } from "react";
+// import { IAllPhotos, IContext } from "./interfaces.jsx";
 
-interface ItfAllPhotos {
+
+interface IAllPhotos {
     url: string;
     id: string;
     isFavorite: boolean;
 };
- /* UPDATE THIS LATER */
-interface ItfContext {
-    allPhotos: ItfAllPhotos[]
-};
-
- /* UPDATE THIS LATER */
-interface ItfProps {
-    children: ReactNode;
-};
-
-
-const Context = React.createContext<ItfContext | null>(null);
-const ContextProvider = ({ children }: ItfProps) => {
-    const [allPhotos, setAllPhotos] = useState<ItfAllPhotos[]>([])
+interface IContext {
+    allPhotos: IAllPhotos[]
+}
+type PropsType = {
+    children: React.ReactNode;
+}
+const Context = createContext<IContext | null>(null);
+const ContextProvider = ({ children }: PropsType) => {
+    const [allPhotos, setAllPhotos] = useState<IAllPhotos[]>([]);
     useEffect(() => {
-        const url: string = "https://raw.githubusercontent.com/bobziroll/scrimba-react-bootcamp-images/master/images.json";
+        const url = "https://raw.githubusercontent.com/bobziroll/scrimba-react-bootcamp-images/master/images.json";
         fetch(url)
             .then(response => response.json())
             .then(data => setAllPhotos(data));
     }, []);
-    console.log(allPhotos);
     return (
         <Context.Provider value={
             {
