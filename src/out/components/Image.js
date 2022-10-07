@@ -25,19 +25,34 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importStar(require("react"));
 const Context_jsx_1 = require("../Context.jsx");
-;
 const Image = ({ className, img }) => {
     const [hovered, setHovered] = (0, react_1.useState)(false);
     const allPhotosContext = (0, react_1.useContext)(Context_jsx_1.Context);
     if (!allPhotosContext)
         return null;
-    const { toggleFavorite } = allPhotosContext;
-    const heartIcon = hovered && react_1.default.createElement("i", { onClick: () => toggleFavorite(img.id), className: "ri-heart-line favorite" });
-    const cartIcon = hovered && react_1.default.createElement("i", { className: "ri-add-circle-line cart" });
+    const { toggleFavorite, addToCart, cartItem, removeFromCart } = allPhotosContext;
+    const heartIcon = () => {
+        if (img.isFavorite) {
+            return react_1.default.createElement("i", { onClick: () => toggleFavorite(img.id), className: "ri-heart-fill favorite" });
+        }
+        else if (hovered) {
+            return react_1.default.createElement("i", { onClick: () => toggleFavorite(img.id), className: "ri-heart-line favorite" });
+        }
+        ;
+    };
+    const cartIcon = () => {
+        const isInCart = cartItem.some(item => item.id === img.id);
+        if (isInCart) {
+            return react_1.default.createElement("i", { onClick: () => removeFromCart(img.id), className: "ri-shopping-cart-fill cart" });
+        }
+        else if (hovered) {
+            return react_1.default.createElement("i", { onClick: () => addToCart(img), className: "ri-add-circle-line cart" });
+        }
+    };
     return (react_1.default.createElement("div", { className: `${className} image-container`, onMouseEnter: () => setHovered(true), onMouseLeave: () => setHovered(false) },
         react_1.default.createElement("img", { src: img.url, className: "image-grid" }),
-        heartIcon,
-        cartIcon));
+        heartIcon(),
+        cartIcon()));
 };
 exports.default = Image;
 //# sourceMappingURL=Image.js.map

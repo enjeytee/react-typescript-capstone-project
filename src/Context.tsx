@@ -1,14 +1,10 @@
 import React, { useState, useEffect, createContext } from "react";
-import { IAllPhotos, IContext } from "./interfaces.jsx";
-import Photos from "./pages/Photos.js";
-// import Photos from "./pages/Photos.js";
+import { IAllPhotos, IContext, IContextProps } from "./interfaces.jsx";
 
-interface IProps {
-    children: React.ReactNode;
-}
 const Context = createContext<IContext | null>(null);
-const ContextProvider = ({ children }: IProps) => {
+const ContextProvider = ({ children }: IContextProps) => {
     const [allPhotos, setAllPhotos] = useState<IAllPhotos[]>([]);
+    const [cartItem, setCartItem] = useState<IAllPhotos[]>([]);
     const url = "https://raw.githubusercontent.com/bobziroll/scrimba-react-bootcamp-images/master/images.json";
     useEffect(() => {
         fetch(url)
@@ -16,23 +12,22 @@ const ContextProvider = ({ children }: IProps) => {
             .then(data => setAllPhotos(data));
     }, []);
     const toggleFavorite = (id: string) => {
-        const updatedArray = allPhotos.map(photo => {
-                if (photo.id === id) {
-                    return {
-                        ...photo,
-                        isFavorite: !photo.isFavorite
-                    }
-                }
-                return photo
-            });
-        setAllPhotos(updatedArray);
-        console.log(allPhotos);
+        setAllPhotos(allPhotos.map(photo => (photo.id === id ? { ...photo, isFavorite: !photo.isFavorite } : photo)));
+    };
+    const addToCart = (img: IAllPhotos) => {
+        setCartItem(item => [ ...item, img ]);
+    };
+    const removeFromCart = (id: string) => {
+        setCartItem(cartItem.filter(item => item.id != id));
     };
     return (
         <Context.Provider value={
             {
                 allPhotos: allPhotos,
-                toggleFavorite: toggleFavorite
+                toggleFavorite: toggleFavorite,
+                addToCart: addToCart,
+                cartItem: cartItem,
+                removeFromCart: removeFromCart
             }
         }>
             {children}
@@ -40,17 +35,3 @@ const ContextProvider = ({ children }: IProps) => {
     );
 };
 export { ContextProvider, Context };
-/*
-    function toggleFavorite(id) {
-        const updatedArr = allPhotos.map(photo => {
-            if (photo.id === id) {
-                return {
-                    ...photo, 
-                    isFavorite: !photo.isFavorite
-                }
-            }
-            return photo
-        })
-        setAllPhotos(updatedArr)
-    }
-*/
