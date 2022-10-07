@@ -4,7 +4,7 @@ import { IAllPhotos, IContext, IContextProps } from "./interfaces.jsx";
 const Context = createContext<IContext | null>(null);
 const ContextProvider = ({ children }: IContextProps) => {
     const [allPhotos, setAllPhotos] = useState<IAllPhotos[]>([]);
-    const [cartItems, setCartItemss] = useState<IAllPhotos[]>([]);
+    const [cartItems, setCartItems] = useState<IAllPhotos[]>([]);
     const url = "https://raw.githubusercontent.com/bobziroll/scrimba-react-bootcamp-images/master/images.json";
     useEffect(() => {
         fetch(url)
@@ -15,10 +15,13 @@ const ContextProvider = ({ children }: IContextProps) => {
         setAllPhotos(allPhotos.map(photo => (photo.id === id ? { ...photo, isFavorite: !photo.isFavorite } : photo)));
     };
     const addToCart = (img: IAllPhotos) => {
-        setCartItemss(item => [ ...item, img ]);
+        setCartItems(item => [ ...item, img ]);
     };
     const removeFromCart = (id: string) => {
-        setCartItemss(cartItems.filter(item => item.id != id));
+        setCartItems(cartItems.filter(item => item.id != id));
+    };
+    const emptyCart = () => {
+        setCartItems([]);
     };
     return (
         <Context.Provider value={
@@ -27,7 +30,8 @@ const ContextProvider = ({ children }: IContextProps) => {
                 toggleFavorite: toggleFavorite,
                 addToCart: addToCart,
                 cartItems: cartItems,
-                removeFromCart: removeFromCart
+                removeFromCart: removeFromCart,
+                emptyCart: emptyCart
             }
         }>
             {children}

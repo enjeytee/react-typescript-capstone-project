@@ -30,16 +30,30 @@ const react_1 = __importStar(require("react"));
 const Context_jsx_1 = require("../Context.jsx");
 const CartItem_jsx_1 = __importDefault(require("../components/CartItem.jsx"));
 const Cart = () => {
+    const [buttonText, setButtonText] = (0, react_1.useState)("Place Order");
     const allPhotosContext = (0, react_1.useContext)(Context_jsx_1.Context);
     if (!allPhotosContext)
         return null;
-    const { cartItems } = allPhotosContext;
+    const { cartItems, emptyCart } = allPhotosContext;
     const cartItemElements = cartItems.map(item => (react_1.default.createElement(CartItem_jsx_1.default, { key: item.id, img: item })));
+    const placeOrder = () => {
+        setButtonText("Ordering...");
+        setTimeout(() => {
+            alert("Order placed!");
+            setButtonText("Place Order");
+            emptyCart();
+        }, 3000);
+    };
     return (react_1.default.createElement("main", { className: "cart-page" },
+        react_1.default.createElement("h1", null, "Check out"),
         cartItemElements,
-        react_1.default.createElement("p", { className: "total-cost" }, "Total: \u20B1 "),
-        react_1.default.createElement("div", { className: "order-button" },
-            react_1.default.createElement("button", null, "Place order"))));
+        react_1.default.createElement("p", { className: "total-cost" },
+            "Total: ",
+            (cartItems.length * 99.95).toLocaleString("en-US", { style: "currency", currency: "PHP" })),
+        cartItems.length > 0 ?
+            react_1.default.createElement("div", { className: "order-button" },
+                react_1.default.createElement("button", { onClick: () => placeOrder() }, buttonText)) :
+            react_1.default.createElement("p", null, "You have no items in your cart.")));
 };
 exports.default = Cart;
 //# sourceMappingURL=Cart.js.map

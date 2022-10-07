@@ -9,6 +9,7 @@ export interface IContext {
     addToCart: (img: IAllPhotos) => void;
     cartItems: IAllPhotos[];
     removeFromCart: (id: string) => void;
+    emptyCart: () => void;
 };
 
 export interface IContextProps {

@@ -27,11 +27,12 @@ const react_1 = __importStar(require("react"));
 const Context_jsx_1 = require("../Context.jsx");
 const CartItem = ({ img }) => {
     const allPhotosContext = (0, react_1.useContext)(Context_jsx_1.Context);
+    const [hovered, setHovered] = (0, react_1.useState)(false);
     if (!allPhotosContext)
         return null;
     const { removeFromCart } = allPhotosContext;
     return (react_1.default.createElement("div", { className: "cart-item" },
-        react_1.default.createElement("i", { onClick: () => removeFromCart(img.id), className: "ri-delete-bin-line" }),
+        react_1.default.createElement("i", { onClick: () => removeFromCart(img.id), className: `ri-delete-bin-${hovered ? "fill" : "line"}`, onMouseEnter: () => setHovered(true), onMouseLeave: () => setHovered(false) }),
         react_1.default.createElement("img", { src: img.url, width: "130px" }),
         react_1.default.createElement("p", null, "\u20B199.95")));
 };
