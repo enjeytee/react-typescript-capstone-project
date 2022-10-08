@@ -22,11 +22,16 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importStar(require("react"));
 const Context_jsx_1 = require("../Context.jsx");
+const useHover_jsx_1 = __importDefault(require("../hooks/useHover.jsx"));
 const Image = ({ className, img }) => {
-    const [hovered, setHovered] = (0, react_1.useState)(false);
+    // const [hovered, setHovered] = useState(false);
+    const { hovered, ref } = (0, useHover_jsx_1.default)();
     const allPhotosContext = (0, react_1.useContext)(Context_jsx_1.Context);
     if (!allPhotosContext)
         return null;
@@ -49,7 +54,10 @@ const Image = ({ className, img }) => {
             return react_1.default.createElement("i", { onClick: () => addToCart(img), className: "ri-add-circle-line cart" });
         }
     };
-    return (react_1.default.createElement("div", { className: `${className} image-container`, onMouseEnter: () => setHovered(true), onMouseLeave: () => setHovered(false) },
+    return (react_1.default.createElement("div", { className: `${className} image-container`, 
+        // onMouseEnter={() => setHovered(true)}
+        // onMouseLeave={() => setHovered(false)}
+        ref: ref },
         react_1.default.createElement("img", { src: img.url, className: "image-grid" }),
         heartIcon(),
         cartIcon()));

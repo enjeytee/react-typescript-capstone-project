@@ -1,9 +1,11 @@
 import React, { useState, useContext } from "react";
-import { IAllPhotos, IImageProps } from "../interfaces.jsx";
-import { Context } from "../Context.jsx"
+import { IImageProps } from "../interfaces.jsx";
+import { Context } from "../Context.jsx";
+import useHover from "../hooks/useHover.jsx";
 
 const Image = ({ className, img }: IImageProps) => {
-    const [hovered, setHovered] = useState(false);
+    // const [hovered, setHovered] = useState(false);
+    const { hovered, ref } = useHover();
     const allPhotosContext = useContext(Context);
     if (!allPhotosContext) return null;
     const { toggleFavorite, addToCart, cartItems, removeFromCart } = allPhotosContext;
@@ -25,8 +27,9 @@ const Image = ({ className, img }: IImageProps) => {
     return (
         <div 
             className={`${className} image-container`}
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
+            // onMouseEnter={() => setHovered(true)}
+            // onMouseLeave={() => setHovered(false)}
+            ref={ref}
         >
             <img src={img.url} className="image-grid"/>
             { heartIcon() }

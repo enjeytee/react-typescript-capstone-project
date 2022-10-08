@@ -22,17 +22,25 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importStar(require("react"));
 const Context_jsx_1 = require("../Context.jsx");
+const useHover_js_1 = __importDefault(require("../hooks/useHover.js"));
 const CartItem = ({ img }) => {
     const allPhotosContext = (0, react_1.useContext)(Context_jsx_1.Context);
-    const [hovered, setHovered] = (0, react_1.useState)(false);
+    // const [hovered, setHovered] = useState(false);
+    const { hovered, ref } = (0, useHover_js_1.default)();
     if (!allPhotosContext)
         return null;
     const { removeFromCart } = allPhotosContext;
     return (react_1.default.createElement("div", { className: "cart-item" },
-        react_1.default.createElement("i", { onClick: () => removeFromCart(img.id), className: `ri-delete-bin-${hovered ? "fill" : "line"}`, onMouseEnter: () => setHovered(true), onMouseLeave: () => setHovered(false) }),
+        react_1.default.createElement("i", { onClick: () => removeFromCart(img.id), className: `ri-delete-bin-${hovered ? "fill" : "line"}`, 
+            // onMouseEnter={() => setHovered(true)}
+            // onMouseLeave={() => setHovered(false)}
+            ref: ref }),
         react_1.default.createElement("img", { src: img.url, width: "130px" }),
         react_1.default.createElement("p", null, "\u20B199.95")));
 };
