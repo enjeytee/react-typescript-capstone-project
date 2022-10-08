@@ -20,3 +20,8 @@ export interface IImageProps extends IContextProps{
     className?: string | undefined;
     img: IAllPhotos;
 };
+
+export interface IUseHover {
+    hovered: boolean;
+    ref: React.RefObject<HTMLDivElement>
+};

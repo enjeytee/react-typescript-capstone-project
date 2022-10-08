@@ -1,9 +1,5 @@
 import React from "react";
-
-interface IUseHover {
-    hovered: boolean;
-    ref: React.RefObject<HTMLDivElement>
-}
+import { IUseHover } from "../interfaces.jsx";
 
 const useHover = (): IUseHover => {
     const [hovered, setHovered] = React.useState(false);
